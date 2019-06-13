@@ -26,7 +26,19 @@ module BitBucket
     #  bitbucket.user_api.profile
     #
     def profile
-      get_request("/1.0/user")
+      if BitBucket.options[:bitbucket_server]
+        get_request("/1.0/user")
+      else
+        get_request("/2.0/user")
+      end
+    end
+
+    def emails
+      if BitBucket.options[:bitbucket_server]
+        get_request("/1.0/user/emails")
+      else
+        get_request("/2.0/user/emails")
+      end
     end
 
 
