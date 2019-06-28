@@ -11,7 +11,7 @@ module BitBucket
         position
       ].freeze
 
-    # Gets a source of repo 
+    # Gets a source of repo
     #
     # = Examples
     #  @bitbucket = BitBucket.new
@@ -23,7 +23,7 @@ module BitBucket
       _validate_presence_of sha
       normalize! params
 
-      get_request("/1.0/repositories/#{user}/#{repo.downcase}/src/#{sha}/#{path}", params)
+      get_request("/2.0/repositories/#{user}/#{repo.downcase}/src/#{sha}/#{path}", params)
     end
     alias :find :get
 
