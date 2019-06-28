@@ -98,7 +98,7 @@ module BitBucket
       _validate_user_repo_params(user, repo) unless (user? && repo?)
       normalize! params
 
-      response = get_request("/1.0/repositories/#{user}/#{repo.downcase}/branches/", params)
+      response = get_request("/2.0/repositories/#{user}/#{repo.downcase}/branches/", params)
       return response unless block_given?
       response.each { |el| yield el }
     end
@@ -183,7 +183,7 @@ module BitBucket
       _validate_user_repo_params(user, repo) unless user? && repo?
       normalize! params
 
-      get_request("/1.0/repositories/#{user}/#{repo.downcase}", params)
+      get_request("/2.0/repositories/#{user}/#{repo.downcase}", params)
     end
 
     alias :find :get
@@ -224,7 +224,7 @@ module BitBucket
                  #  get_request("/1.0/users/#{user_name}", params)
                  #else
                    # For authenticated user
-                   get_request("/1.0/user/repositories", params)
+                   get_request("/2.0/user/repositories", params)
                  #end
       return response unless block_given?
       response.each { |el| yield el }
