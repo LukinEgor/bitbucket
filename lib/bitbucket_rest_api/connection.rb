@@ -24,6 +24,8 @@ module BitBucket
         :ssl
     ].freeze
 
+    MIDDLEWARE_SETTINGS = [:raw].freeze
+
     def default_options(options={})
       {
           :headers => {
@@ -85,11 +87,12 @@ module BitBucket
     # Returns a Fraday::Connection object
     #
     def connection(options = {})
-      conn_options = default_options(options)
+      middleware_options, conn_options = options.partition { |k, v| MIDDLEWARE_SETTINGS.include? k }.map(&:to_h)
+      conn_options = default_options(conn_options)
       clear_cache unless options.empty?
       puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
 
-      @connection ||= Faraday.new(conn_options.merge(:builder => stack(options)))
+      @connection ||= Faraday.new(conn_options.merge(:builder => stack(middleware_options)))
     end
 
   end # Connection
